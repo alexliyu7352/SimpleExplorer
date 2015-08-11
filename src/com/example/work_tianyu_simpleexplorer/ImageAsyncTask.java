@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ImageAsyncTask extends AsyncTask<File, String, ArrayList<String>> {
 
@@ -94,6 +99,18 @@ public class ImageAsyncTask extends AsyncTask<File, String, ArrayList<String>> {
 		this.data = result;
 		mListView.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_expandable_list_item_1, data));
 		mTextView.setText("Scan complete");
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent();
+				intent.setAction(android.content.Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.fromFile(imgList.get(position)), "image/*");
+				mContext.startActivity(intent);
+
+			}
+			
+		});
 	}
 	
 	// 递归调用此方法来获取目录下所有文件

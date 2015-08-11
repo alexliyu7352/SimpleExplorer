@@ -2,14 +2,16 @@ package com.example.work_tianyu_simpleexplorer;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +30,10 @@ public class MainActivity extends Activity {
 		mListView = (ListView) findViewById(R.id.listview_image);
 		mTextView = (TextView) findViewById(R.id.textview);
 		
-		initData(new File("//mnt//sdcard"));
+		//后台线程更新数据
+		initData(new File("//mnt//sdcard/tencent"));
+		
+		
 	}
 
 	@Override
