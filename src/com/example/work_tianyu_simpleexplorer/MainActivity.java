@@ -1,16 +1,31 @@
 package com.example.work_tianyu_simpleexplorer;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
+	
+	private ListView mListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mListView = (ListView) findViewById(R.id.listview_image);
+		
+		ArrayList<String> data = initData(new File("//mnt//sdcard"));
+		Log.i("MainActivity", data.toString());
+		mListView.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_expandable_list_item_1, data));
 	}
 
 	@Override
@@ -30,5 +45,17 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	//初始化显示所有图片的ListView的数据
+	private ArrayList<String> initData(File file) {
+		FileClassify fc = new FileClassify();
+		ArrayList<String> data = new ArrayList<>();
+		fc.find(file);
+		List<File> t = fc.getImgList();
+		for(File i : t) {
+			data.add(i.getName());
+		}
+		return data;
 	}
 }
