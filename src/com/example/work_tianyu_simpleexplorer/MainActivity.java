@@ -11,21 +11,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	private ListView mListView;
+	private TextView mTextView;
+	
+	ArrayList<String> data = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		mListView = (ListView) findViewById(R.id.listview_image);
+		mTextView = (TextView) findViewById(R.id.textview);
 		
-		ArrayList<String> data = initData(new File("//mnt//sdcard"));
-		Log.i("MainActivity", data.toString());
-		mListView.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_expandable_list_item_1, data));
+		initData(new File("//mnt//sdcard"));
 	}
 
 	@Override
@@ -46,16 +49,10 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	//初始化显示所有图片的ListView的数据
-	private ArrayList<String> initData(File file) {
-		FileClassify fc = new FileClassify();
-		ArrayList<String> data = new ArrayList<>();
-		fc.find(file);
-		List<File> t = fc.getImgList();
-		for(File i : t) {
-			data.add(i.getName());
-		}
-		return data;
+
+	// 初始化显示所有图片的ListView的数据
+	private void initData(File file) {
+		ImageAsyncTask ia = new ImageAsyncTask(MainActivity.this,mListView,mTextView,data);
+		ia.execute(file);
 	}
 }
