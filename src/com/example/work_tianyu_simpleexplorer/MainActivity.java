@@ -17,21 +17,13 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	private ListView mListView;
-	private TextView mTextView;
-	
-	ArrayList<String> data = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mListView = (ListView) findViewById(R.id.listview_image);
-		mTextView = (TextView) findViewById(R.id.textview);
-		
-		//后台线程更新数据
-		initData(new File("//mnt//sdcard/tencent"));
+
 		
 		
 	}
@@ -55,9 +47,5 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	// 初始化显示所有图片的ListView的数据
-	private void initData(File file) {
-		ImageAsyncTask ia = new ImageAsyncTask(MainActivity.this,mListView,mTextView,data);
-		ia.execute(file);
-	}
+
 }

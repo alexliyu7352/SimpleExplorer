@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ImageAsyncTask extends AsyncTask<File, String, ArrayList<String>> {
+public class VideoAsyncTask extends AsyncTask<File, String, ArrayList<String>>{
 
 	private static String TAG = "ImageAsyncTask";
 
@@ -62,7 +61,7 @@ public class ImageAsyncTask extends AsyncTask<File, String, ArrayList<String>> {
 			{ "xml", "text/plain" }, { "z", "application/x-compress" }, { "zip", "application/zip" }, { "", "*/*" } ,
 			{"mkv", "video/"}};
 	
-	public ImageAsyncTask(Context mContext, ListView mListView, TextView mTextView, ArrayList<String> data) {
+	public VideoAsyncTask(Context mContext, ListView mListView, TextView mTextView, ArrayList<String> data) {
 		super();
 		this.mContext = mContext;
 		this.mListView = mListView;
@@ -80,7 +79,7 @@ public class ImageAsyncTask extends AsyncTask<File, String, ArrayList<String>> {
 	protected ArrayList<String> doInBackground(File... params) {
 		ArrayList<String> data = new ArrayList<>();
 		find(params[0]);
-		List<File> t = getImgList();
+		List<File> t = getVideoList();
 		for (File i : t) {
 			data.add(i.getName());
 		}
@@ -105,7 +104,7 @@ public class ImageAsyncTask extends AsyncTask<File, String, ArrayList<String>> {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent();
 				intent.setAction(android.content.Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.fromFile(imgList.get(position)), "image/*");
+				intent.setDataAndType(Uri.fromFile(videoList.get(position)), "video/*");
 				mContext.startActivity(intent);
 				
 			}
